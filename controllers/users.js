@@ -50,10 +50,10 @@ const addUser = async (req, res) => {
     })
 }
 const deleteUser = async (req, res = response) => {
+
     const { id } = req.params
     // const user = await User.findByIdAndDelete(id)
-    const user = await User.findByIdAndUpdate(id, {status:false})
-
+    const user = await User.findByIdAndUpdate(id, { state:false })
     res.json({
        user
     })
