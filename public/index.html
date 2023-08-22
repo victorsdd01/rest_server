@@ -7,6 +7,59 @@
     <title>Acceso denegado</title>
 </head>
 <body>
-    <h1>acceso denegado</h1>
+    
+    <h1>Google sign in</h1>
+    <hr>
+
+    <div id="g_id_onload"
+         data-client_id="422158993444-82jvble6odgf5tsobedg8af3rpug0bg8.apps.googleusercontent.com"
+         data-auto_prompt="false"
+         data-callback="handleCredentialResponse">
+         
+      </div>
+      <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+      </div>
+
+      <button id="signOut-btn" style="background-color: rgba(65, 153, 240, 0.815); color:white; border-radius: 12px;">Sign out</button>
+
+      <script>
+        function handleCredentialResponse(response) {
+           const body = { id_token: response.credential}
+           fetch('http://localhost:8080/api/auth/google', {
+            method: 'POST',
+            headers: {
+                'Content-Type':'application/json',
+            },
+            body: JSON.stringify(body)
+           })
+               .then(resp => resp.json())
+               .then(resp => {
+                console.log('resp', resp.user.email)
+                localStorage.setItem('google-email', resp.user.email)
+               })
+               .catch(console.warn)
+
+        }
+
+        const button = document.getElementById('signOut-btn')
+
+        button.addEventListener('click', () => {
+          const googleEmail =  localStorage.getItem('google-email')
+          google.accounts.id.disableAutoSelect()
+          google.accounts.id.revoke(localStorage.getItem('google-email'), done => {
+            localStorage.clear()
+            location.reload()
+          })
+        })
+
+      </script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
 </body>
 </html>
