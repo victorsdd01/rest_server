@@ -1,9 +1,8 @@
-const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-async function googleVerify(token = '') {
-    console.log('token', token)
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+const googleVerify = async (idToken = '') =>{
   const ticket = await client.verifyIdToken({
-      idToken: token,
+      idToken: idToken,
       audience: process.env.GOOGLE_CLIENT_ID,
   });
   const {name, picture, email} = ticket.getPayload();
@@ -14,7 +13,6 @@ async function googleVerify(token = '') {
   }
   
 }
-googleVerify().catch(console.error);
 
 
 module.exports = {
