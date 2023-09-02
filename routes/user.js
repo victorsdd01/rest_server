@@ -9,7 +9,7 @@ const router = Router()
 
 router.get('/', getUsers)
 router.put('/:id',[
-    check('id', 'Is not valid ID').isMongoId(),
+    check('id', 'Is not a valid ID').isMongoId(),
     check('id').custom(existUserById),
     check('role').custom(isRoleValid),
     validateFields

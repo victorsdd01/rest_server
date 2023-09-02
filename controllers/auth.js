@@ -3,7 +3,6 @@ const User = require('../models/users')
 const bcryptjs =  require('bcryptjs')
 const {generateJWT} = require('../helpers/generate_JWT')
 const { googleVerify } = require("../helpers/google-verify")
-const { findOne } = require("../models/users")
 
 
 

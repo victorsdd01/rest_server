@@ -4,9 +4,10 @@ const User = require('../models/users')
 const bcryptjs =  require('bcryptjs')
 
 const getUsers = async (req, res = response) => {
+    // add params
     const {limit = 5, desde = 5 } = req.query
-    const filter = { state: true}
     // we going to filter by state === true
+    const filter = { state: true}
     const [total,users] = await Promise.all([
         User.countDocuments(filter),
         User.find(filter)
